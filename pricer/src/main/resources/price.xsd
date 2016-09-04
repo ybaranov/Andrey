@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+          <!-- XML Schema Generated from XML Document on Thu Jun 25 2015 13:22:50 GMT+0300 (Финляндия (лето)) -->
+          <!-- with XmlGrid.net Free Online Service http://xmlgrid.net -->
+       <xs:element name="root">
+              <xs:complexType>
+                     <xs:sequence>
+                     	<xs:element name="supplier_id" type="xs:string"></xs:element>
+                     	<xs:element name="articul_column" type="xs:string"></xs:element>
+                     	<xs:element name="product_name_column" type="xs:string"></xs:element>
+                     	<xs:element name="product_price_column" type="xs:string"></xs:element>
+                     	<xs:element name="product_quantity_column" type="xs:string"></xs:element>
+                     	<xs:element name="has_retail_price" type="xs:boolean"></xs:element>
+                     	<xs:element name="retail_price_multiplier_percent" type="xs:int" minOccurs="0"></xs:element>
+                     </xs:sequence>
+              </xs:complexType>
+       </xs:element>
+</xs:schema>

@@ -1,0 +1,7 @@
+<root>
+	<supplier_id>S_0</supplier_id>
+	<articul_column>A</articul_column>
+	<product_name_column>B</product_name_column>
+	<product_price_column>C</product_price_column>
+	<product_quantity_column>D</product_quantity_column>
+</root>
