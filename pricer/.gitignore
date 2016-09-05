@@ -22,8 +22,19 @@ local.properties
 #############
 
 target/
+/target/
 .idea/
 .idea
 .repository/
 *.iml
 *.iws
+/target/surefire-reports/
+/target/maven-status/
+/target/generated-sources/
+/target/surefire/
+/target/maven-archiver/
+/target/pricer.exe
+/target/Pricer.jar
+/target/test-classes/
+/target/generated-test-sources/
+/target/classes/
