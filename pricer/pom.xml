@@ -6,7 +6,6 @@
     <artifactId>pricer</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
-
     <name>pricer</name>
     <url>http://maven.apache.org</url>
 
