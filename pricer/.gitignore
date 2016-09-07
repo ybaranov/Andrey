@@ -1,1 +1,44 @@
+<<<<<<< HEAD
 /target/
+=======
+#################
+## Eclipse
+#################
+
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+
+#############
+## Idea
+#############
+
+target/
+/target/
+.idea/
+.idea
+.repository/
+*.iml
+*.iws
+/target/surefire-reports/
+/target/maven-status/
+/target/generated-sources/
+/target/surefire/
+/target/maven-archiver/
+/target/pricer.exe
+/target/Pricer.jar
+/target/test-classes/
+/target/generated-test-sources/
+/target/classes/
+>>>>>>> c6ffabb0d43beba55ac5a356acd1898dffe2c841
