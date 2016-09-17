@@ -14,6 +14,9 @@
     <bean id="priceBookWriterService" class="com.prima.pricer.service.PriceBookWriterService">
     </bean>
     
+    <bean id="xmlConfigService" class="com.prima.pricer.service.XmlConfigService">
+    </bean>
+    
     <bean id="applicationService" class="com.prima.pricer.service.ApplicationService">
         <property name="excelConvertService" ref="excelConvertService"/>
         <property name="priceBookReaderService" ref="priceBookReaderService"/>

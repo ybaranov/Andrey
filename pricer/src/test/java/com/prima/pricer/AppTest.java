@@ -3,34 +3,53 @@ package com.prima.pricer;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.prima.configuration.Settings;
+import com.prima.configuration.dom.Root;
+import com.prima.pricer.service.XmlConfigService;
 
 import junit.framework.TestCase;
 
 public class AppTest extends TestCase {
 	
-	static {
+	private static XmlConfigService xmlService;
+	
+	@SuppressWarnings("resource")
+	@BeforeClass
+	public static void beforeClass() {
 		BasicConfigurator.configure();
+		logger.info("Initializing Spring context.");
+        
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/application-context.xml");
+        
+        logger.info("Spring context initialized.");
+
+        xmlService = (XmlConfigService) applicationContext.getBean("xmlConfigService");
 	}
 	
 	protected final static Logger logger = LogManager.getRootLogger();
 	
+	@Test
     public void testApp() {
-    	assertNotNull(Settings.instanceXml());
-    	assertNotNull(Settings.instanceXml().getArticulColumn());
-    	assertNotNull(Settings.instanceXml().getProductNameColumn());
-    	assertNotNull(Settings.instanceXml().getProductPriceColumn());
-    	assertNotNull(Settings.instanceXml().getProductQuantityColumn());
-    	assertNotNull(Settings.instanceXml().getSupplierId());
-    	assertNotNull(Settings.instanceXml().getRetailPriceMultiplierPercent());
-    	assertNotNull(Settings.instanceXml().isHasRetailPrice());
-    	logger.info(Settings.instanceXml().getArticulColumn());
-    	logger.info(Settings.instanceXml().getProductNameColumn());
-    	logger.info(Settings.instanceXml().getProductPriceColumn());
-    	logger.info(Settings.instanceXml().getProductQuantityColumn());
-    	logger.info(Settings.instanceXml().getSupplierId());
-    	logger.info(Settings.instanceXml().getRetailPriceMultiplierPercent());
-    	logger.info(Settings.instanceXml().isHasRetailPrice());
+		beforeClass();
+		Root root = xmlService.readConfObject("price_conf_0.xml");
+    	assertNotNull(root);
+    	assertNotNull(root.getArticulColumn());
+    	assertNotNull(root.getProductNameColumn());
+    	assertNotNull(root.getProductPriceColumn());
+    	assertNotNull(root.getProductQuantityColumn());
+    	assertNotNull(root.getSupplierId());
+    	assertNotNull(root.getRetailPriceMultiplierPercent());
+    	assertNotNull(root.isHasRetailPrice());
+    	logger.info(root.getArticulColumn());
+    	logger.info(root.getProductNameColumn());
+    	logger.info(root.getProductPriceColumn());
+    	logger.info(root.getProductQuantityColumn());
+    	logger.info(root.getSupplierId());
+    	logger.info(root.getRetailPriceMultiplierPercent());
+    	logger.info(root.isHasRetailPrice());
     }
 }

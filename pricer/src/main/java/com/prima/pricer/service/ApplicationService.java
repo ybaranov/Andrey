@@ -9,10 +9,8 @@ import com.prima.pricer.interfaces.ExcelConvertFacade;
 import com.prima.pricer.interfaces.PriceBookReaderFacade;
 import com.prima.pricer.interfaces.PriceBookWriterFacade;
 
-public class ApplicationService implements ApplicationFacade {
+public class ApplicationService extends AbstractService implements ApplicationFacade {
 	
-	protected final static Logger logger = LogManager.getLogger(ApplicationService.class);
-
 	private ExcelConvertFacade excelConvertService;
 	private PriceBookReaderFacade priceBookReaderService;
 	private PriceBookWriterFacade priceBookWriterService;
