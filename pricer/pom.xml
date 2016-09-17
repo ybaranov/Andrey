@@ -38,20 +38,21 @@
             <artifactId>poi</artifactId>
             <version>${poi.version}</version>
         </dependency>
-        
+
         <dependency>
-    		<groupId>org.apache.poi</groupId>
-   			<artifactId>poi-ooxml</artifactId>
-    		<version>${poi.version}</version>
-		</dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
         <dependency>
-		    <groupId>org.apache.poi</groupId>
-		    <artifactId>poi-ooxml-schemas</artifactId>
-		    <version>${poi.version}</version>
-		</dependency>
-        
-        
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+
         <dependency>
+<<<<<<< HEAD
 		    <groupId>log4j</groupId>
 		    <artifactId>log4j</artifactId>
 		    <version>1.2.17</version>
@@ -62,6 +63,12 @@
 	        <artifactId>spring-context</artifactId>
 	        <version>4.3.2.RELEASE</version>
 	    </dependency>
+=======
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+>>>>>>> 1616aba8f348689a07945eff4c0e78db5436452d
 
     </dependencies>
 

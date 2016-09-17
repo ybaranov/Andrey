@@ -1,5 +1,6 @@
 package com.prima.pricer;
 
+<<<<<<< HEAD
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -24,4 +25,12 @@ public class App {
 
         appService.runUpdate();
 	}
+=======
+public class App {
+    //TODO: Read properties config.
+    //TODO: Read XML config for each priceBook.
+    //TODO: Convert xls to xlsx files.
+    //TODO: Loop #1:
+    //
+>>>>>>> 1616aba8f348689a07945eff4c0e78db5436452d
 }
