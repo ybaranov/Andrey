@@ -1,2 +1,4 @@
-./metadata
-/pricer/
+.metadata/
+.recommenders/
+.git/
+RemoteSystemsTempFiles 
