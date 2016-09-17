@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ExcelConvertService extends AbstractService implements ExcelConvertFacade {
-    public static final Path path = Paths.get("C:\\andrey\\prices\\");
+    public static final Path path = Paths.get("C:\\andrey\\files\\prices\\");
     private int numColumn = 0;
 
     @Override

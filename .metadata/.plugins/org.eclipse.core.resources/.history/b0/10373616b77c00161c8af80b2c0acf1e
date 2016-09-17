@@ -1,7 +1,0 @@
-package com.prima.pricer.service;
-
-import com.prima.pricer.interfaces.ApplicationFacade;
-
-public class ApplicationService implements ApplicationFacade {
-
-}
