@@ -49,26 +49,4 @@ public class Settings {
         jaxbUnmarshaller.setSchema(schema);
         root = (com.prima.configuration.dom.Root) jaxbUnmarshaller.unmarshal(is);
     }
-
-    private String getProperty(String name) {
-        String value = properties.getProperty(name);
-        if (value == null) {
-            throw new NullPointerException("Problem in application.properties file: No value for key " + name);
-        }
-        return value;
-    }
-
-    private boolean getBooleanProperty(String name) {
-        String value = getProperty(name);
-        return Boolean.parseBoolean(value);
-    }
-
-    private int getIntegerProperty(String name) {
-        String value = getProperty(name);
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException ex) {
-            throw new RuntimeException("In application.properties, the value for key " + name + " must an integer number!");
-        }
-    }
 }
