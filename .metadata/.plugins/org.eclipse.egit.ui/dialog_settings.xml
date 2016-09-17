@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="GitCommitMessageComponent">
+		<list key="E:\Dropbox\Dropbox\Java-Rep-New\Andrey\.git">
+			<item value="false"/>
+			<item value="baranovy@ukr.net"/>
+			<item value="added spring.&#x0D;&#x0A;"/>
+			<item value="Abcd1234%"/>
+			<item value="e5ccb17658b0f8f01b124be0572a227713ff032d"/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item value="500,500" key="STAGING_SASH_FORM_WEIGHT"/>
+		<item value="false" key="sortItemState"/>
+		<item value="500,500" key="HORIZONTAL_SASH_FORM_WEIGHT"/>
+	</section>
+</section>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="excelConvertService" class="com.prima.pricer.service.ExcelConvertService">
+    </bean>
+    
+    <bean id="priceBookReaderService" class="com.prima.pricer.service.PriceBookReaderService">
+    </bean>
+    
+    <bean id="priceBookWriterService" class="com.prima.pricer.service.PriceBookWriterService">
+    </bean>
+    
+    <bean id="applicationService" class="com.prima.pricer.service.ApplicationService">
+        <property name="excelConvertService" value="Spring is fun." />
+    </bean>
+
+</beans>

@@ -1,0 +1,10 @@
+package com.prima.pricer;
+
+import com.prima.configuration.Settings;
+
+public class App {
+
+	public static void main(String[] args) {
+		
+	}
+}
