@@ -1,16 +1,13 @@
 package com.prima.pricer.service;
 
-import com.prima.pricer.interfaces.ApplicationFacade;
-import com.prima.pricer.interfaces.ExcelConvertFacade;
-import com.prima.pricer.interfaces.PriceBookReaderFacade;
-import com.prima.pricer.interfaces.PriceBookWriterFacade;
+import com.prima.pricer.interfaces.*;
 
 public class ApplicationService extends AbstractService implements ApplicationFacade {
 
 	private ExcelConvertFacade excelConvertService;
 	private PriceBookReaderFacade priceBookReaderService;
 	private PriceBookWriterFacade priceBookWriterService;
-	private CatalogService catalogService;
+	private CatalogFacade catalogService;
 
 	@Override
 	public void setExcelConvertService(ExcelConvertFacade facade) {
@@ -28,8 +25,8 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 	}
 
     @Override
-    public void setCatalogService(CatalogService catalogService) {
-        this.catalogService = catalogService;
+    public void setCatalogService(CatalogFacade facade) {
+        this.catalogService = facade;
     }
 
     @Override

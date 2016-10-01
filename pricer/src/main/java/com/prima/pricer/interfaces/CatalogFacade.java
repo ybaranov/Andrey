@@ -1,5 +1,9 @@
 package com.prima.pricer.interfaces;
 
-public interface CatalogFacade {
+import com.prima.pricer.model.ObjectToProcessing;
 
+import java.util.List;
+
+public interface CatalogFacade {
+    List<ObjectToProcessing> selectNewObjects();
 }
