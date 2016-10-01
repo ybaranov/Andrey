@@ -1,20 +1,17 @@
 package com.prima.pricer.service;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
-import com.prima.pricer.App;
 import com.prima.pricer.interfaces.ApplicationFacade;
 import com.prima.pricer.interfaces.ExcelConvertFacade;
 import com.prima.pricer.interfaces.PriceBookReaderFacade;
 import com.prima.pricer.interfaces.PriceBookWriterFacade;
 
 public class ApplicationService extends AbstractService implements ApplicationFacade {
-	
+
 	private ExcelConvertFacade excelConvertService;
 	private PriceBookReaderFacade priceBookReaderService;
 	private PriceBookWriterFacade priceBookWriterService;
-	
+	private CatalogService catalogService;
+
 	@Override
 	public void setExcelConvertService(ExcelConvertFacade facade) {
 		this.excelConvertService = facade;
@@ -30,7 +27,12 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 		this.priceBookWriterService = facade;
 	}
 
-	@Override
+    @Override
+    public void setCatalogService(CatalogService catalogService) {
+        this.catalogService = catalogService;
+    }
+
+    @Override
 	public void runUpdate() {
 		logger.info("run update");
 		//TODO добавить логику обновления

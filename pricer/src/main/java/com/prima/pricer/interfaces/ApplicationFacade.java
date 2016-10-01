@@ -1,5 +1,7 @@
 package com.prima.pricer.interfaces;
 
+import com.prima.pricer.service.CatalogService;
+
 public interface ApplicationFacade {
 
 	void setExcelConvertService(ExcelConvertFacade facade);
@@ -7,6 +9,8 @@ public interface ApplicationFacade {
 	void setPriceBookReaderService(PriceBookReaderFacade facade);
 	
 	void setPriceBookWriterService(PriceBookWriterFacade facade);
+
+	void setCatalogService(CatalogService catalogService);
 	
 	void runUpdate();
 	

@@ -7,20 +7,24 @@
 
 	<bean id="excelConvertService" class="com.prima.pricer.service.ExcelConvertService">
     </bean>
-    
+
     <bean id="priceBookReaderService" class="com.prima.pricer.service.PriceBookReaderService">
     </bean>
-    
+
     <bean id="priceBookWriterService" class="com.prima.pricer.service.PriceBookWriterService">
     </bean>
-    
+
     <bean id="xmlConfigService" class="com.prima.pricer.service.XmlConfigService">
     </bean>
-    
+
+    <bean id="catalogService" class="com.prima.pricer.service.CatalogService">
+    </bean>
+
     <bean id="applicationService" class="com.prima.pricer.service.ApplicationService">
         <property name="excelConvertService" ref="excelConvertService"/>
         <property name="priceBookReaderService" ref="priceBookReaderService"/>
         <property name="priceBookWriterService" ref="priceBookWriterService"/>
+        <property name="catalogService" ref="catalogService"/>
     </bean>
 
 </beans>
