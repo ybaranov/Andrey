@@ -32,7 +32,8 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 
 	@Override
 	public void runUpdate() {
-		logger.info("run update");	
+		logger.info("run update");
+		//TODO добавить логику обновления
 	}
 
 }
