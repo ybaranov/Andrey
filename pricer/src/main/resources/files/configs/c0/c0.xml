@@ -1,0 +1,9 @@
+<root>
+	<supplier_id>S_0</supplier_id>
+	<articul_column>C</articul_column>
+	<product_name_column>E</product_name_column>
+	<product_price_column>J</product_price_column>
+	<product_quantity_column>K</product_quantity_column>
+	<has_retail_price>true</has_retail_price>
+	<retail_price_multiplier_percent>0</retail_price_multiplier_percent>
+</root>
