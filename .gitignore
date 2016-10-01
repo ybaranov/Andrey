@@ -2,4 +2,5 @@
 .recommenders/
 .git/
 RemoteSystemsTempFiles
-pricer/.settings.xml
+pricer/.settings/
+pricer/.classpath
