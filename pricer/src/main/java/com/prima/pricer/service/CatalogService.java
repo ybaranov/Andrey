@@ -51,6 +51,7 @@ public class CatalogService extends AbstractService implements CatalogFacade {
         }
     }
 
+    @Override
     public List<ObjectToProcessing> selectNewObjects() {
         List<Path> pathsExcel = null;
         Set<String> pathsXml = null;

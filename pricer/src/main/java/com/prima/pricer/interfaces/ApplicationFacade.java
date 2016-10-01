@@ -10,7 +10,7 @@ public interface ApplicationFacade {
 	
 	void setPriceBookWriterService(PriceBookWriterFacade facade);
 
-	void setCatalogService(CatalogService catalogService);
+	void setCatalogService(CatalogFacade facade);
 	
 	void runUpdate();
 	
