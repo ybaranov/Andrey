@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class CatalogService extends AbstractService implements CatalogFacade {
 
-    private Path path;
+    protected Path path;
 
     public CatalogService(Path root) {
         if (root != null) {
