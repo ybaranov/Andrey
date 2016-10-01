@@ -113,10 +113,4 @@ public class CatalogService extends AbstractService implements CatalogFacade {
         String group = matcher.group(1);
         return Integer.parseInt(group.substring(1));
     }
-
-    public static void main(String[] args) {
-        CatalogService catalogService = new CatalogService(null);
-        catalogService.selectNewObjects();
-
-    }
 }
