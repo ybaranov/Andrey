@@ -24,12 +24,8 @@ import java.util.stream.Collectors;
 public class CatalogService extends AbstractService implements CatalogFacade {
 
     protected Path path;
-
-    public CatalogService(Path root) {
-        if (root != null) {
-            this.path = root;
-            logger.info("Set path to files: " + root.toString());
-        } else {
+    
+    public CatalogService() {
             Properties prop = new Properties();
             InputStream input = null;
             try {
@@ -48,7 +44,6 @@ public class CatalogService extends AbstractService implements CatalogFacade {
                     }
                 }
             }
-        }
     }
 
     @Override
