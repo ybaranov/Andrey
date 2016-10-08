@@ -15,15 +15,38 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class ExcelConvertService extends AbstractService implements ExcelConvertFacade {
-    public static final Path path = Paths.get("C:\\andrey\\files\\prices\\");
+    private static Path path;
     private int numColumn = 0;
+
+    public ExcelConvertService() {
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            String filename = "application.properties";
+            input = CatalogService.class.getClassLoader().getResourceAsStream(filename);
+            prop.load(input);
+            path = Paths.get(prop.getProperty("root.folder") + "prices\\");
+        } catch (IOException e) {
+            logger.warn("Exception into reading properties file application.properties");
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    logger.warn("Can't close FileInputStream for file application.properties");
+                }
+            }
+        }
+    }
 
     @Override
     public void prepareAllBooks() {
@@ -63,7 +86,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
      * @param sheetOld - заполненный лист формата xls
      * @param sheetNew - лист в который происходит запись формата xlsx
      */
-    public void convertSheet(Sheet sheetOld, Sheet sheetNew) {
+    private void convertSheet(Sheet sheetOld, Sheet sheetNew) {
 
         //Задаём передачу параметров со старого документа в новый
         sheetNew.setDisplayFormulas(sheetOld.isDisplayFormulas());
