@@ -7,6 +7,9 @@ public class PriceBookRecord {
     private String price;
     private String quantity;
     private boolean hasRetailPrice;
+    private boolean isAvailable;
+    // is newly created during last successful run of app. Update on scnd time of existance of this record to false.
+    private boolean isNew;
     private Integer retailPriceMultiplierPercent;
     private int rowNumber;
 
@@ -58,7 +61,23 @@ public class PriceBookRecord {
         this.hasRetailPrice = hasRetailPrice;
     }
 
-    public Integer getRetailPriceMultiplierPercent() {
+    public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	public Integer getRetailPriceMultiplierPercent() {
         return retailPriceMultiplierPercent;
     }
 

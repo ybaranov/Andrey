@@ -2,6 +2,8 @@ package com.prima.pricer;
 
 import com.prima.pricer.interfaces.ExcelConvertFacade;
 import com.prima.pricer.service.CatalogService;
+
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+@Ignore
 public class ExcelConvertServiceTest extends AbstractTest {
     private static ExcelConvertFacade converterService;
     private static Path path;

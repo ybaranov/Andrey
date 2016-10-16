@@ -12,24 +12,29 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class PriceBookReaderService extends AbstractService implements PriceBookReaderFacade {
+	
+	protected CatalogFacade catalogFacade;
+	
     @Override
-    public Set<PriceBook> getAllBooks(CatalogFacade catalogFacade) {
+    public Collection<PriceBook> getAllBooks() {
         List<ObjectToProcessing> list = catalogFacade.selectNewObjects();
         Set<PriceBook> result = new HashSet<>();
         for (ObjectToProcessing objectToProcessing : list) {
             PriceBook priceBook = new PriceBook();
+            priceBook.setObjectToProcessing(objectToProcessing);
             priceBook.setRecords(readBook(objectToProcessing));
             result.add(priceBook);
         }
         return result;
     }
 
-    private List<PriceBookRecord> readBook(ObjectToProcessing objectToProcessing) {
+    protected List<PriceBookRecord> readBook(ObjectToProcessing objectToProcessing) {
         List<PriceBookRecord> result = new ArrayList<>();
         try {
             InputStream inp = new FileInputStream(objectToProcessing.getPathToExcel());
@@ -75,4 +80,14 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
 
         return result;
     }
+
+	public void setCatalogService(CatalogFacade catalogFacade) {
+		this.catalogFacade = catalogFacade;
+	}
+
+	@Override
+	public PriceBook readExistedResultBook(ObjectToProcessing objectToProcessing) {
+		// TODO yb : implement.
+		return null;
+	}
 }

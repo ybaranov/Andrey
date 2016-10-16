@@ -1,21 +1,20 @@
 package com.prima.pricer;
 
-import com.prima.pricer.interfaces.CatalogFacade;
+import java.util.Collection;
+import java.util.Set;
+
+import org.junit.Test;
+
 import com.prima.pricer.interfaces.PriceBookReaderFacade;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
-import org.junit.Test;
-
-import java.util.Set;
 
 public class PriceBookReaderServiceTest extends AbstractTest {
     private static PriceBookReaderFacade priceBookReaderService;
-    private static CatalogFacade catalogService;
 
     @SuppressWarnings("resource")
     private static void beforeTest() {
         priceBookReaderService = (PriceBookReaderFacade) applicationContext.getBean("priceBookReaderService");
-        catalogService = (CatalogFacade) applicationContext.getBean("catalogService");
     }
 
     @Test
@@ -25,7 +24,7 @@ public class PriceBookReaderServiceTest extends AbstractTest {
         beforeTest();
 
         //act
-        Set<PriceBook> allBooks = priceBookReaderService.getAllBooks(catalogService);
+        Collection<PriceBook> allBooks = priceBookReaderService.getAllBooks();
 
         //Manual (temporary) verify
         for (PriceBook priceBook : allBooks) {

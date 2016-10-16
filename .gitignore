@@ -4,3 +4,4 @@
 RemoteSystemsTempFiles
 pricer/.settings/
 pricer/.classpath
+pricer/src/main/resources/application.properties
