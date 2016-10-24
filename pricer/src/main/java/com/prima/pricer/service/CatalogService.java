@@ -24,26 +24,26 @@ import java.util.stream.Collectors;
 public class CatalogService extends AbstractService implements CatalogFacade {
 
     protected Path path;
-    
+
     public CatalogService() {
-            Properties prop = new Properties();
-            InputStream input = null;
-            try {
-                String filename = "application.properties";
-                input = CatalogService.class.getClassLoader().getResourceAsStream(filename);
-                prop.load(input);
-                path = Paths.get(prop.getProperty("root.folder"));
-            } catch (IOException e) {
-                logger.warn("Exception into reading properties file application.properties");
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        logger.warn("Can't close FileInputStream for file application.properties");
-                    }
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            String filename = "application.properties";
+            input = CatalogService.class.getClassLoader().getResourceAsStream(filename);
+            prop.load(input);
+            path = Paths.get(prop.getProperty("root.folder"));
+        } catch (IOException e) {
+            logger.warn("Exception into reading properties file application.properties");
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    logger.warn("Can't close FileInputStream for file application.properties");
                 }
             }
+        }
     }
 
     @Override

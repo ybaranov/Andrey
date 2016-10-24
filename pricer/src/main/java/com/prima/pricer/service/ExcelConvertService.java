@@ -127,8 +127,8 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
     /**
      * Преобразование строк в apache POI
      *
-     * @param rowOld  - строка из листа xls
-     * @param rowNew  - строка из листа xlsx
+     * @param rowOld - строка из листа xls
+     * @param rowNew - строка из листа xlsx
      */
     private void convertRow(HSSFRow rowOld, XSSFRow rowNew) {
         XSSFCell cellNew;
@@ -154,7 +154,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
         Hyperlink linkOld = cellOld.getHyperlink();
 
         try {
-            if(linkOld != null){
+            if (linkOld != null) {
                 CellStyle hyperlinkStyle = cellNew.getSheet().getWorkbook().createCellStyle();
                 Font hyperlinkFont = cellNew.getSheet().getWorkbook().createFont();
                 hyperlinkFont.setUnderline(Font.U_SINGLE);

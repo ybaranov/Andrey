@@ -2,7 +2,6 @@ package com.prima.pricer;
 
 import com.prima.pricer.interfaces.ExcelConvertFacade;
 import com.prima.pricer.service.CatalogService;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -56,11 +55,11 @@ public class ExcelConvertServiceTest extends AbstractTest {
         //arrange
         List<Path> pathsToXls = Files.walk(path)
                 .filter(Files::isRegularFile)
-                .filter(path1 -> toString().endsWith("xls"))
+                .filter(path1 -> toString().endsWith(".xls"))
                 .collect(Collectors.toList());
         List<Path> pathsToXlsx = Files.walk(path)
                 .filter(Files::isRegularFile)
-                .filter(path1 -> toString().endsWith("xlsx"))
+                .filter(path1 -> toString().endsWith(".xlsx"))
                 .collect(Collectors.toList());
 
         //assert

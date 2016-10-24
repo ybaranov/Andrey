@@ -11,16 +11,15 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class PriceBookReaderService extends AbstractService implements PriceBookReaderFacade {
-	
-	protected CatalogFacade catalogFacade;
-	
+
+    protected CatalogFacade catalogFacade;
+
     @Override
     public Collection<PriceBook> getAllBooks() {
         List<ObjectToProcessing> list = catalogFacade.selectNewObjects();
@@ -81,13 +80,72 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
         return result;
     }
 
-	public void setCatalogService(CatalogFacade catalogFacade) {
-		this.catalogFacade = catalogFacade;
-	}
+    public void setCatalogService(CatalogFacade catalogFacade) {
+        this.catalogFacade = catalogFacade;
+    }
 
-	@Override
-	public PriceBook readExistedResultBook(ObjectToProcessing objectToProcessing) {
-		// TODO yb : implement.
-		return null;
-	}
+    @Override
+    public PriceBook readExistedResultBook(ObjectToProcessing objectToProcessing) {
+        Properties prop = new Properties();
+        InputStream input = null;
+        Path path = null;
+        try {
+            String filename = "application.properties";
+            input = CatalogService.class.getClassLoader().getResourceAsStream(filename);
+            prop.load(input);
+            int start = objectToProcessing.getPathToExcel().lastIndexOf("\\");
+            int end = objectToProcessing.getPathToExcel().length();
+            String name = objectToProcessing.getPathToExcel().substring(start, end);
+            path = Paths.get(prop.getProperty("root.folder") + "result\\" + name);
+        } catch (IOException e) {
+            logger.warn("Exception into reading properties file application.properties");
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    logger.warn("Can't close FileInputStream for file application.properties");
+                }
+            }
+        }
+        if (Files.exists(path)) {
+            PriceBook result = new PriceBook();
+            result.setRecords(new ArrayList<>());
+            try {
+                InputStream inputStream = new FileInputStream(path.toFile());
+                Workbook wb = WorkbookFactory.create(inputStream);
+                Sheet sheet = wb.getSheetAt(0);
+                for (Row row : sheet) {
+                    PriceBookRecord record = new PriceBookRecord();
+
+                    row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
+                    row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
+                    row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+                    row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+                    row.getCell(4).setCellType(Cell.CELL_TYPE_BOOLEAN);
+                    row.getCell(5).setCellType(Cell.CELL_TYPE_NUMERIC);
+                    row.getCell(6).setCellType(Cell.CELL_TYPE_BOOLEAN);
+
+                    record.setRowNumber(row.getRowNum());
+                    record.setArticul(row.getCell(0).getStringCellValue());
+                    record.setName(row.getCell(1).getStringCellValue());
+                    record.setPrice(row.getCell(2).getStringCellValue());
+                    record.setQuantity(row.getCell(3).getStringCellValue());
+                    record.setRetailPrice(row.getCell(4).getBooleanCellValue());
+                    if (record.hasRetailPrice()) {
+                        record.setRetailPriceMultiplierPercent((int) row.getCell(5).getNumericCellValue());
+                    }
+                    record.setAvailable(row.getCell(6).getBooleanCellValue());
+                    record.setNew(false);
+
+                    result.addRecord(record);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        } else {
+            return new PriceBook();
+        }
+    }
 }
