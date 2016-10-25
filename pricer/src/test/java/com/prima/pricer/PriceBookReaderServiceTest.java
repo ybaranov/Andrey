@@ -50,6 +50,7 @@ public class PriceBookReaderServiceTest extends AbstractTest {
         beforeTest();
         ObjectToProcessing objectToProcessing = new ObjectToProcessing();
         objectToProcessing.setPathToExcel("C:\\andrey\\files\\prices\\p0\\p0.xlsx");
+//        objectToProcessing.setPathToExcel("E:\\Dropbox\\Dropbox\\Java-Rep-New\\Andrey\\pricer\\src\\main\\resources\\files\\prices\\p0\\p0.xlsx");
 
         //act
         PriceBook result = priceBookReaderService.readExistedResultBook(objectToProcessing);

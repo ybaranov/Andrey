@@ -30,8 +30,6 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 	}
     
     protected void saveBookResult(PriceBook book) {
-    	// TODO yb : implement WriterService.
-    	// remove when implemented writer Service.
     	priceBookWriterService.writeResultBook(book);
     }
     
