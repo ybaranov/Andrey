@@ -92,4 +92,18 @@ public class PriceBookRecord {
     public void setRowNumber(int rowNumber) {
         this.rowNumber = rowNumber;
     }
+
+    @Override
+    public String toString() {
+        return "PriceBookRecord{" +
+                "rowNumber='" + rowNumber + '\'' +
+                ", articul='" + articul + '\'' +
+                ", name='" + name + '\'' +
+                ", price='" + price + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", hasRetailPrice=" + hasRetailPrice +
+                ", isAvailable=" + isAvailable +
+                ", isNew=" + isNew +
+                '}';
+    }
 }

@@ -33,6 +33,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 			for (int i = 0; i < list.size(); i++) {
 				Row row = sheet.createRow(i);
 				PriceBookRecord record = list.get(i);
+				System.out.println("Save record: " + record);
 
 				row.createCell(0).setCellValue(createHelper.createRichTextString(record.getArticul()));
 				row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));

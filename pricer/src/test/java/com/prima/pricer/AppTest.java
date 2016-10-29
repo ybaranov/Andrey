@@ -1,23 +1,30 @@
 package com.prima.pricer;
 
 import com.prima.configuration.dom.Root;
+import com.prima.pricer.service.ApplicationService;
 import com.prima.pricer.service.XmlConfigService;
 import org.junit.Test;
 
 public class AppTest extends AbstractTest {
 
     private static XmlConfigService xmlService;
+    private static ApplicationService applicationService;
 
     @SuppressWarnings("resource")
-    public static void beforeTest() {
+    public static void beforeTest1() {
         xmlService = (XmlConfigService) applicationContext.getBean("xmlConfigService");
     }
 
+    @SuppressWarnings("resource")
+    public static void beforeTest2() {
+        applicationService = (ApplicationService) applicationContext.getBean("applicationService");
+    }
+
     @Test
-    public void test() {
+    public void test1() {
         //arrange
         beforeClass();
-        beforeTest();
+        beforeTest1();
 
         //act
         Root root = xmlService.readConfObject("price_conf_0.xml");
@@ -38,5 +45,18 @@ public class AppTest extends AbstractTest {
         logger.info(root.getSupplierId());
         logger.info(root.getRetailPriceMultiplierPercent());
         logger.info(root.isHasRetailPrice());
+    }
+
+    @Test
+    public void test2() {
+        //arrange
+        beforeClass();
+        beforeTest2();
+
+        //act
+        applicationService.runUpdate();
+
+        //assert
+
     }
 }

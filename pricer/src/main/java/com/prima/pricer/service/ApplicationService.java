@@ -18,10 +18,8 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 		logger.info("run update start.");
 		Collection<PriceBook> availableBooks = priceBookReaderService.getAllBooks();
 		for (final PriceBook book : availableBooks) {
-			// TODO yb : read existed result book if it is existed.
-			priceBookReaderService.readExistedResultBook(book.getObjectToProcessing());
-			// create new if not.
-			PriceBook resultBook = new PriceBook();
+			// read existed result book if it is existed, create new if not
+            PriceBook resultBook = priceBookReaderService.readExistedResultBook(book.getObjectToProcessing());
 			processBook(book, resultBook);
 			saveBookResult(resultBook);
 		}
@@ -38,19 +36,36 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     		final PriceBookRecord existed = resultBook.getRecord(record.getArticul());
     		if (existed != null) {
     			existed.setNew(false);
-    			processBookingRecord(record, existed);
+    			processExistedBookingRecord(record, existed);
     		} else {
     			final PriceBookRecord created = new PriceBookRecord();
     			created.setNew(true);
-    			resultBook.addRecord(created);
-    			processBookingRecord(record, created);
-    		}
+    			processNewBookingRecord(record, created);
+                resultBook.addRecord(created);
+            }
     	}
     	resultBook.setObjectToProcessing(book.getObjectToProcessing());
     }
     
-    protected void processBookingRecord(PriceBookRecord record, PriceBookRecord newRecord) {
-    	// todo : implement update by id (articual id) ->> qnty, price, isAvailable.
+    protected void processExistedBookingRecord(PriceBookRecord record, PriceBookRecord existedRecord) {
+        existedRecord.setQuantity(record.getQuantity());
+        existedRecord.setPrice(record.getPrice());
+        existedRecord.setAvailable(record.isAvailable());
+    }
+
+    protected void processNewBookingRecord(PriceBookRecord record, PriceBookRecord newRecord) {
+        newRecord.setRowNumber(record.getRowNumber());
+        newRecord.setArticul(record.getArticul());
+        newRecord.setName(record.getName());
+        newRecord.setPrice(record.getPrice());
+        newRecord.setQuantity(record.getQuantity());
+        newRecord.setRetailPrice(record.hasRetailPrice());
+        if (record.hasRetailPrice()) {
+            newRecord.setRetailPriceMultiplierPercent(record.getRetailPriceMultiplierPercent());
+        } else {
+            newRecord.setRetailPriceMultiplierPercent(0);
+        }
+        newRecord.setAvailable(record.isAvailable());
     }
 
 	@Override
