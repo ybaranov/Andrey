@@ -118,27 +118,39 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                 for (Row row : sheet) {
                     try {
                         PriceBookRecord record = new PriceBookRecord();
-
-                        row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
-                        row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
-                        row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
-                        row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
-                        row.getCell(4).setCellType(Cell.CELL_TYPE_BOOLEAN);
-                        row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
-                        row.getCell(6).setCellType(Cell.CELL_TYPE_BOOLEAN);
-
                         record.setRowNumber(row.getRowNum());
-                        record.setArticul(row.getCell(0).getStringCellValue());
-                        record.setName(row.getCell(1).getStringCellValue());
-                        record.setPrice(row.getCell(2).getStringCellValue());
-                        record.setQuantity(row.getCell(3).getStringCellValue());
-                        record.setRetailPrice(row.getCell(4).getBooleanCellValue());
-                        if (record.hasRetailPrice()) {
-                            record.setRetailPriceMultiplierPercent(Integer.valueOf(row.getCell(5).getStringCellValue()));
-                        } else {
-                            record.setRetailPriceMultiplierPercent(0);
+                        if (row.getCell(0) != null) {
+                            row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
+                            record.setArticul(row.getCell(0).getStringCellValue());
                         }
-                        record.setAvailable(row.getCell(6).getBooleanCellValue());
+                        if (row.getCell(1) != null) {
+                            row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
+                            record.setName(row.getCell(1).getStringCellValue());
+                        }
+                        if (row.getCell(2) != null) {
+                            row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
+                            record.setPrice(row.getCell(2).getStringCellValue());
+                        }
+                        if (row.getCell(3) != null) {
+                            row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+                            record.setQuantity(row.getCell(3).getStringCellValue());
+                        }
+                        if (row.getCell(4) != null) {
+                            row.getCell(4).setCellType(Cell.CELL_TYPE_BOOLEAN);
+                            record.setRetailPrice(row.getCell(4).getBooleanCellValue());
+                        }
+                        if (row.getCell(5) != null) {
+                            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+                            if (record.hasRetailPrice()) {
+                                record.setRetailPriceMultiplierPercent(Integer.valueOf(row.getCell(5).getStringCellValue()));
+                            } else {
+                                record.setRetailPriceMultiplierPercent(0);
+                            }
+                        }
+                        if (row.getCell(6) != null) {
+                            row.getCell(6).setCellType(Cell.CELL_TYPE_BOOLEAN);
+                            record.setAvailable(row.getCell(6).getBooleanCellValue());
+                        }
                         record.setNew(false);
 
                         result.addRecord(record);
