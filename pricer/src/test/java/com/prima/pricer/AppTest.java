@@ -38,6 +38,7 @@ public class AppTest extends AbstractTest {
         assertNotNull(root.getSupplierId());
         assertNotNull(root.getRetailPriceMultiplierPercent());
         assertNotNull(root.isHasRetailPrice());
+        assertNotNull(root.isAvailabilityOnExistence());
         logger.info(root.getArticulColumn());
         logger.info(root.getProductNameColumn());
         logger.info(root.getProductPriceColumn());
@@ -45,6 +46,7 @@ public class AppTest extends AbstractTest {
         logger.info(root.getSupplierId());
         logger.info(root.getRetailPriceMultiplierPercent());
         logger.info(root.isHasRetailPrice());
+        logger.info(root.isAvailabilityOnExistence());
     }
 
     @Test

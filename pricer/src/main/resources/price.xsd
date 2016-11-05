@@ -12,6 +12,7 @@
                      	<xs:element name="product_quantity_column" type="xs:string"></xs:element>
                      	<xs:element name="has_retail_price" type="xs:boolean"></xs:element>
                      	<xs:element name="retail_price_multiplier_percent" type="xs:int" minOccurs="0"></xs:element>
+                     	<xs:element name="availability_on_existence" type="xs:boolean" minOccurs="0"></xs:element>
                      </xs:sequence>
               </xs:complexType>
        </xs:element>

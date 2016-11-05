@@ -5,4 +5,6 @@ import com.prima.pricer.model.PriceBook;
 public interface PriceBookWriterFacade {
 	
 	 boolean writeResultBook(PriceBook resultBook);
+	 
+	 boolean writeArchivedResultBook(PriceBook resultBook);
 }

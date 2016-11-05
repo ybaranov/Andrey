@@ -48,7 +48,8 @@ import javax.xml.bind.annotation.XmlType;
     "productPriceColumn",
     "productQuantityColumn",
     "hasRetailPrice",
-    "retailPriceMultiplierPercent"
+    "retailPriceMultiplierPercent",
+    "availabilityOnExistence"
 })
 @XmlRootElement(name = "root")
 public class Root {
@@ -67,6 +68,8 @@ public class Root {
     protected boolean hasRetailPrice;
     @XmlElement(name = "retail_price_multiplier_percent")
     protected Integer retailPriceMultiplierPercent;
+    @XmlElement(name = "availability_on_existence")
+    protected boolean availabilityOnExistence;
 
     /**
      * Gets the value of the supplierId property.
@@ -227,5 +230,13 @@ public class Root {
     public void setRetailPriceMultiplierPercent(Integer value) {
         this.retailPriceMultiplierPercent = value;
     }
+
+	public boolean isAvailabilityOnExistence() {
+		return availabilityOnExistence;
+	}
+
+	public void setAvailabilityOnExistence(boolean availabilityOnExistence) {
+		this.availabilityOnExistence = availabilityOnExistence;
+	}
 
 }

@@ -19,7 +19,14 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 		Collection<PriceBook> availableBooks = priceBookReaderService.getAllBooks();
 		for (final PriceBook book : availableBooks) {
 			// read existed result book if it is existed, create new if not
+			
             PriceBook resultBook = priceBookReaderService.readExistedResultBook(book.getObjectToProcessing());
+            if (resultBook != null) {
+            	// TODO yb : save in archive.
+            	priceBookWriterService.writeArchivedResultBook(resultBook);
+            } else {
+            	resultBook = new PriceBook();
+            }
 			processBook(book, resultBook);
 			saveBookResult(resultBook);
 		}
@@ -47,10 +54,11 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     	resultBook.setObjectToProcessing(book.getObjectToProcessing());
     }
     
-    protected void processExistedBookingRecord(PriceBookRecord record, PriceBookRecord existedRecord) {
+    protected void processExistedBookingRecord(
+    		PriceBookRecord record, 
+    		PriceBookRecord existedRecord) {
         existedRecord.setQuantity(record.getQuantity());
         existedRecord.setPrice(record.getPrice());
-        existedRecord.setAvailable(record.isAvailable());
     }
 
     protected void processNewBookingRecord(PriceBookRecord record, PriceBookRecord newRecord) {

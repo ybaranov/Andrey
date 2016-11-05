@@ -1,12 +1,13 @@
 package com.prima.pricer.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PriceBook {
 	
-    private Collection<PriceBookRecord> records;
+    private Collection<PriceBookRecord> records = new ArrayList<>();
     private Map<String, PriceBookRecord> tempMap = new HashMap<>();
     protected ObjectToProcessing objToP;
 
