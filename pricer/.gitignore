@@ -40,3 +40,4 @@ target/
 /target/test-classes/
 /target/generated-test-sources/
 /target/classes/
+/src/main/resources/application.properties

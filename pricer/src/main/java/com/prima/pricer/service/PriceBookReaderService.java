@@ -96,9 +96,9 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
             int start = objectToProcessing.getPathToExcel().lastIndexOf("\\");
             int end = objectToProcessing.getPathToExcel().length();
             String name = objectToProcessing.getPathToExcel().substring(start, end);
-            name = appedResultToFileName(name);
+            name = appendResultToFileName(name);
             path = Paths.get(prop.getProperty("root.folder") + "result\\" + name);
-            
+
         } catch (IOException e) {
             logger.warn("Exception into reading properties file application.properties");
         } finally {
@@ -164,7 +164,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                 logger.error(e.getMessage());
             }
             return result;
-        } 
+        }
         return null;
     }
 }
