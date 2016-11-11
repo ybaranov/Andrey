@@ -60,9 +60,13 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                     cell.setCellType(Cell.CELL_TYPE_STRING);
                     priceBookRecord.setPrice(cell.getStringCellValue());
                     //Quantity
-                    cell = row.getCell(objectToProcessing.getRoot().getProductQuantityColumn().charAt(0) - 65);
-                    cell.setCellType(Cell.CELL_TYPE_STRING);
-                    priceBookRecord.setQuantity(cell.getStringCellValue());
+                    if (!objectToProcessing.getRoot().isAvailabilityOnExistence()) {
+                        cell = row.getCell(objectToProcessing.getRoot().getProductQuantityColumn().charAt(0) - 65);
+                        cell.setCellType(Cell.CELL_TYPE_STRING);
+                        priceBookRecord.setQuantity(cell.getStringCellValue());
+                    } else {
+                        priceBookRecord.setQuantity("+");
+                    }
                     //Retail price multiplier percent
                     if (objectToProcessing.getRoot().isHasRetailPrice()) {
                         priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());

@@ -41,14 +41,14 @@ public class CatalogServiceTest extends AbstractTest {
             logger.info(root.getProductNameColumn());
             assertNotNull(root.getProductPriceColumn());
             logger.info(root.getProductPriceColumn());
-            assertNotNull(root.getProductQuantityColumn());
-            logger.info(root.getProductQuantityColumn());
-            assertNotNull(root.getSupplierId());
-            logger.info(root.getSupplierId());
-            assertNotNull(root.getRetailPriceMultiplierPercent());
-            logger.info(root.getRetailPriceMultiplierPercent());
-            assertNotNull(root.isHasRetailPrice());
-            logger.info(root.isHasRetailPrice());
+//            assertNotNull(root.getProductQuantityColumn());
+//            logger.info(root.getProductQuantityColumn());
+//            assertNotNull(root.getSupplierId());
+//            logger.info(root.getSupplierId());
+//            assertNotNull(root.getRetailPriceMultiplierPercent());
+//            logger.info(root.getRetailPriceMultiplierPercent());
+//            assertNotNull(root.isHasRetailPrice());
+//            logger.info(root.isHasRetailPrice());
         }
     }
 }

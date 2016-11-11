@@ -4,11 +4,13 @@ import com.prima.pricer.interfaces.PriceBookWriterFacade;
 import com.prima.pricer.model.ObjectToProcessing;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Ignore
 public class PriceBookWriterServiceTest extends AbstractTest {
     private static PriceBookWriterFacade priceBookWriterService;
     private static PriceBook priceBook;

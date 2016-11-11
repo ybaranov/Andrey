@@ -15,12 +15,12 @@ import java.util.Iterator;
 
 public class PriceBookWriterService extends AbstractService implements PriceBookWriterFacade {
 
-    protected void createHeader(Sheet sheet, PriceBookRecord firstRecord, CreationHelper createHelper, CellStyle style) {
+    protected void createHeader(Sheet sheet, CellStyle style) {
         Row row = sheet.createRow(0);
-        row.createCell(0).setCellValue(createHelper.createRichTextString(firstRecord.getArticul()));
-        row.createCell(1).setCellValue(createHelper.createRichTextString(firstRecord.getName()));
-        row.createCell(2).setCellValue(createHelper.createRichTextString(firstRecord.getPrice()));
-        row.createCell(3).setCellValue(createHelper.createRichTextString(firstRecord.getQuantity()));
+        row.createCell(0).setCellValue("АРТИКУЛ");
+        row.createCell(1).setCellValue("НАИМЕНОВАНИЕ");
+        row.createCell(2).setCellValue("ЦЕНА");
+        row.createCell(3).setCellValue("КОЛИЧЕСТВО");
         row.createCell(4).setCellValue("ЕСТЬ_РОЗНИЧНАЯ_ЦЕНА");
         row.createCell(5).setCellValue("ПРОЦЕНТ_РОЗНИЧНОЙ_ЦЕНЫ");
         row.createCell(6).setCellValue("ДОСТУПНО");
@@ -36,7 +36,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             path = composePath(
                     resultBook.getObjectToProcessing().getPathToExcel());
 
-            logger.debug("result path = " + path);
+            logger.info("Write result. Path = " + path);
 
             Workbook workbook = new XSSFWorkbook();
             CreationHelper createHelper = workbook.getCreationHelper();
@@ -60,7 +60,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 
                 }
                 if (i == 0) {
-                    createHeader(sheet, record, createHelper, style);
+                    createHeader(sheet, style);
                     i++;
                     continue;
                 }
@@ -80,7 +80,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 
     protected int setRowValues(PriceBook resultBook, CreationHelper createHelper, Sheet sheet, CellStyle style, int i, PriceBookRecord record) {
         Row row = sheet.createRow(i++);
-        logger.debug("Save record: " + record);
+//        logger.info("Save record: " + record);
 
         row.createCell(0).setCellValue(createHelper.createRichTextString(record.getArticul()));
         row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));
@@ -118,8 +118,8 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             String source = composePath(resultBook.getObjectToProcessing().getPathToExcel());
             String destination = appendArchiveToFileName(appendTimeStampToFileName(source));
 
-            logger.debug("String source = " + source);
-            logger.debug("String source = " + destination);
+            logger.info("Archiving:\tString source = " + source);
+            logger.info("Archiving:\tString destination = " + destination);
 
             Files.copy(Paths.get(source), Paths.get(destination));
             return true;

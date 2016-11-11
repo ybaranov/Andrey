@@ -23,9 +23,4 @@ public class App {
 
         appService.runUpdate();
     }
-    //TODO: Read properties config.
-    //TODO: Read XML config for each priceBook.
-    //TODO: Convert xls to xlsx files.
-    //TODO: Loop #1:
-    //
 }

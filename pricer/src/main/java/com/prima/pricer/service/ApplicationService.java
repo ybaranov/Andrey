@@ -16,10 +16,11 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     @Override
     public void runUpdate() {
         logger.info("run update start.");
+        excelConvertService.prepareAllBooks();
         Collection<PriceBook> availableBooks = priceBookReaderService.getAllBooks();
         for (final PriceBook book : availableBooks) {
             // read existed result book if it is existed, create new if not
-
+            logger.info("Begin working on book " + book.getObjectToProcessing().getPathToExcel());
             PriceBook resultBook = priceBookReaderService.readExistedResultBook(book.getObjectToProcessing());
             if (resultBook != null) {
                 priceBookWriterService.writeArchivedResultBook(book);
@@ -28,8 +29,8 @@ public class ApplicationService extends AbstractService implements ApplicationFa
             }
             processBook(book, resultBook);
             saveBookResult(resultBook);
+            logger.info("Finish working on book " + book.getObjectToProcessing().getPathToExcel() + "\n");
         }
-        //TODO добавить логику обновления
         logger.info("run update end.");
     }
 
