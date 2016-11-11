@@ -30,6 +30,9 @@ public class ApplicationService extends AbstractService implements ApplicationFa
             processBook(book, resultBook);
             saveBookResult(resultBook);
             logger.info("Finish working on book " + book.getObjectToProcessing().getPathToExcel() + "\n");
+            //TODO: 1. Add calculation retail price from price_multiplier_percent
+            //TODO: 2. Add id from site into result book
+            //TODO: 3. Test that not available records change their availability to false
         }
         logger.info("run update end.");
     }
