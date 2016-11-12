@@ -5,6 +5,8 @@ import com.prima.pricer.interfaces.PriceBookReaderFacade;
 import com.prima.pricer.model.ObjectToProcessing;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -71,6 +73,9 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                     if (objectToProcessing.getRoot().isHasRetailPrice()) {
                         priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());
                     }
+                    if (!validateBookRecord(priceBookRecord, objectToProcessing)) {
+                    	continue;
+                    }
                     result.add(priceBookRecord);
                 } catch (Exception e) {
                 }
@@ -82,6 +87,22 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
         }
 
         return result;
+    }
+    
+    protected boolean validateBookRecord(
+    		PriceBookRecord priceBookRecord, ObjectToProcessing objectToProcessing) {
+    	if (StringUtils.isEmpty(priceBookRecord.getArticul())
+                || StringUtils.isEmpty(priceBookRecord.getPrice())
+                || StringUtils.isEmpty(priceBookRecord.getQuantity())) {
+            return false;
+
+        }
+        if (!objectToProcessing.getRoot().isHasRetailPrice() && !StringUtils.isNumeric(priceBookRecord.getPrice())
+                ) {
+            return false;
+
+        }
+        return true;
     }
 
     public void setCatalogService(CatalogFacade catalogFacade) {
@@ -148,9 +169,9 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                         if (row.getCell(5) != null) {
                             row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
                             if (record.hasRetailPrice()) {
-                                record.setRetailPriceMultiplierPercent(Integer.valueOf(row.getCell(5).getStringCellValue()));
+                                record.setRetailPriceMultiplierPercent(Double.valueOf(row.getCell(5).getStringCellValue()));
                             } else {
-                                record.setRetailPriceMultiplierPercent(0);
+                                record.setRetailPriceMultiplierPercent(0d);
                             }
                         }
                         if (row.getCell(6) != null) {
@@ -159,6 +180,9 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                         }
                         record.setNew(false);
 
+                        if (!validateBookRecord(record, objectToProcessing)) {
+                        	continue;
+                        }
                         result.addRecord(record);
                     } catch (Exception e) {
                         e.printStackTrace();

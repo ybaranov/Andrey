@@ -67,7 +67,7 @@ public class Root {
     @XmlElement(name = "has_retail_price")
     protected boolean hasRetailPrice;
     @XmlElement(name = "retail_price_multiplier_percent")
-    protected Integer retailPriceMultiplierPercent;
+    protected Double retailPriceMultiplierPercent;
     @XmlElement(name = "availability_on_existence")
     protected boolean availabilityOnExistence;
 
@@ -215,7 +215,7 @@ public class Root {
      *     {@link Integer }
      *     
      */
-    public Integer getRetailPriceMultiplierPercent() {
+    public Double getRetailPriceMultiplierPercent() {
         return retailPriceMultiplierPercent;
     }
 
@@ -227,7 +227,7 @@ public class Root {
      *     {@link Integer }
      *     
      */
-    public void setRetailPriceMultiplierPercent(Integer value) {
+    public void setRetailPriceMultiplierPercent(Double value) {
         this.retailPriceMultiplierPercent = value;
     }
 

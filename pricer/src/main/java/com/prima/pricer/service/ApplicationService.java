@@ -1,6 +1,7 @@
 package com.prima.pricer.service;
 
 import com.prima.pricer.interfaces.*;
+import com.prima.pricer.model.ObjectToProcessing;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
 
@@ -11,6 +12,7 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     protected ExcelConvertFacade excelConvertService;
     protected PriceBookReaderFacade priceBookReaderService;
     protected PriceBookWriterFacade priceBookWriterService;
+    protected PriceCalculationFacade priceCalculationService;
     protected CatalogFacade catalogService;
 
     @Override
@@ -28,11 +30,12 @@ public class ApplicationService extends AbstractService implements ApplicationFa
                 resultBook = new PriceBook();
             }
             processBook(book, resultBook);
+            processMissedBookRecords(book, resultBook);
             saveBookResult(resultBook);
             logger.info("Finish working on book " + book.getObjectToProcessing().getPathToExcel() + "\n");
-            //TODO: 1. Add calculation retail price from price_multiplier_percent
-            //TODO: 2. Add id from site into result book
-            //TODO: 3. Test that not available records change their availability to false
+            //TODO vm: 1. Add calculation retail price from price_multiplier_percent
+            //TODO vm: 2. Add id from site into result book
+            //TODO vm: 3. Test that not available records change their availability to false
         }
         logger.info("run update end.");
     }
@@ -40,17 +43,27 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     protected void saveBookResult(PriceBook book) {
         priceBookWriterService.writeResultBook(book);
     }
+    
+    protected void processMissedBookRecords(PriceBook book, PriceBook resultBook) {
+    	book.composeTempMap();
+    	for (final PriceBookRecord record : resultBook.getRecords()) {
+            final PriceBookRecord existed = book.getRecord(record.getArticul());
+            if (existed == null) {
+            	record.setAvailable(false);
+            }
+    	}
+    }
 
     protected void processBook(PriceBook book, PriceBook resultBook) {
         for (final PriceBookRecord record : book.getRecords()) {
             final PriceBookRecord existed = resultBook.getRecord(record.getArticul());
             if (existed != null) {
                 existed.setNew(false);
-                processExistedBookingRecord(record, existed);
+                processExistedBookingRecord(record, existed, book.getObjectToProcessing());
             } else {
                 final PriceBookRecord created = new PriceBookRecord();
                 created.setNew(true);
-                processNewBookingRecord(record, created);
+                processNewBookingRecord(record, created, book.getObjectToProcessing());
                 resultBook.addRecord(created);
             }
         }
@@ -59,22 +72,25 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 
     protected void processExistedBookingRecord(
             PriceBookRecord record,
-            PriceBookRecord existedRecord) {
+            PriceBookRecord existedRecord, ObjectToProcessing oTo) {
         existedRecord.setQuantity(record.getQuantity());
-        existedRecord.setPrice(record.getPrice());
+        existedRecord.setPrice(priceCalculationService.calculatePrice(record.getPrice(), oTo));
     }
 
-    protected void processNewBookingRecord(PriceBookRecord record, PriceBookRecord newRecord) {
+    protected void processNewBookingRecord(
+    		PriceBookRecord record, 
+    		PriceBookRecord newRecord, 
+    		ObjectToProcessing oTo) {
         newRecord.setRowNumber(record.getRowNumber());
         newRecord.setArticul(record.getArticul());
         newRecord.setName(record.getName());
-        newRecord.setPrice(record.getPrice());
+        newRecord.setPrice(priceCalculationService.calculatePrice(record.getPrice(), oTo));
         newRecord.setQuantity(record.getQuantity());
         newRecord.setRetailPrice(record.hasRetailPrice());
         if (record.hasRetailPrice()) {
             newRecord.setRetailPriceMultiplierPercent(record.getRetailPriceMultiplierPercent());
         } else {
-            newRecord.setRetailPriceMultiplierPercent(0);
+            newRecord.setRetailPriceMultiplierPercent(0d);
         }
         newRecord.setAvailable(record.isAvailable());
     }
@@ -98,4 +114,11 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     public void setCatalogService(CatalogFacade facade) {
         this.catalogService = facade;
     }
+
+    @Override
+	public void setPriceCalculationService(PriceCalculationFacade priceCalculationService) {
+		this.priceCalculationService = priceCalculationService;
+	}
+    
+    
 }

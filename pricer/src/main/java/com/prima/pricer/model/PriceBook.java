@@ -29,6 +29,10 @@ public class PriceBook {
         this.records = records;
     }
     
+    public void composeTempMap() {
+    	composeTempMap(this.records);
+    }
+    
     protected void composeTempMap(Collection<PriceBookRecord> records) {
     	tempMap.clear();
     	for (final PriceBookRecord record : records) {

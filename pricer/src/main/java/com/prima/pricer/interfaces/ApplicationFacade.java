@@ -14,5 +14,6 @@ public interface ApplicationFacade {
 	
 	void runUpdate();
 	
+	void setPriceCalculationService(PriceCalculationFacade priceCalculationService);
 	
 }

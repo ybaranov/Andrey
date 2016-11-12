@@ -5,6 +5,6 @@
 	<product_price_column>C</product_price_column>
 	<product_quantity_column>D</product_quantity_column>
 	<has_retail_price>false</has_retail_price>
-	<retail_price_multiplier_percent>10</retail_price_multiplier_percent>
+	<retail_price_multiplier_percent>10.1</retail_price_multiplier_percent>
 	<availability_on_existence>true</availability_on_existence>
 </root>

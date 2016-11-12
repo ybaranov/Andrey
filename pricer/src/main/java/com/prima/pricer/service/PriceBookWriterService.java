@@ -92,9 +92,12 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         } else {
             row.createCell(5);
         }
-        boolean isAvailable = availabilityDeterminerSvc
+        boolean isAvailable = false;
+        if (record.isAvailable()) {
+        	isAvailable = availabilityDeterminerSvc
                 .determineIsAvailable(record.getQuantity(),
                         resultBook.getObjectToProcessing().getRoot().isAvailabilityOnExistence());
+        }
         row.createCell(6).setCellValue(isAvailable);
         row.createCell(7).setCellValue(record.isNew());
 

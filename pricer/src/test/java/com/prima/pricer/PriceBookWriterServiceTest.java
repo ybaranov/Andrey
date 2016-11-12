@@ -27,7 +27,7 @@ public class PriceBookWriterServiceTest extends AbstractTest {
         record1.setPrice("price1");
         record1.setQuantity("quantity1");
         record1.setRetailPrice(true);
-        record1.setRetailPriceMultiplierPercent(10);
+        record1.setRetailPriceMultiplierPercent(10d);
         record1.setAvailable(true);
 
         PriceBookRecord record2 = new PriceBookRecord();
@@ -36,7 +36,7 @@ public class PriceBookWriterServiceTest extends AbstractTest {
         record2.setPrice("price2");
         record2.setQuantity("quantity2");
         record2.setRetailPrice(false);
-        record2.setRetailPriceMultiplierPercent(15);
+        record2.setRetailPriceMultiplierPercent(15d);
         record2.setAvailable(false);
 
         records.add(record1);
