@@ -56,7 +56,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
                     .collect(Collectors.toList());
             for (Path file : paths) {
                 if (file.toString().toLowerCase().endsWith(".xls")) {
-                    System.out.println("Begin working on file " + file.toFile().getName());
+                    logger.trace("Begin working on file " + file.toFile().getName());
                     Workbook workBookPOI;
 
                     FileInputStream inputStream;
@@ -72,7 +72,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
                     outputStream.close();
                     workBookPOI.close();
                     workXBookPOI.close();
-                    System.out.println("End working on file " + file.toFile().getName());
+                    logger.trace("End working on file " + file.toFile().getName());
                 }
             }
         } catch (IOException e) {
@@ -210,7 +210,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
                 cellNew.setCellValue(cellOld.getStringCellValue());
                 break;
             default:
-                System.out.println("Unknown cell type: " + cellOld.getCellType());
+                logger.trace("Unknown cell type: " + cellOld.getCellType());
         }
     }
 
