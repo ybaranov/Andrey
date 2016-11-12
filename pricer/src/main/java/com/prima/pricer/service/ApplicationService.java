@@ -14,12 +14,16 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     protected PriceBookWriterFacade priceBookWriterService;
     protected PriceCalculationFacade priceCalculationService;
     protected CatalogFacade catalogService;
+    protected SiteIdReaderFacade siteIdReaderFacade;
 
     @Override
     public void runUpdate() {
-        logger.info("run update start.");
+        logger.info("run update start.\n");
         excelConvertService.prepareAllBooks();
         Collection<PriceBook> availableBooks = priceBookReaderService.getAllBooks();
+        if (availableBooks != null && availableBooks.size() > 0) {
+            siteIdReaderFacade.readAllProperties();
+        }
         for (final PriceBook book : availableBooks) {
             // read existed result book if it is existed, create new if not
             logger.info("Begin working on book " + book.getObjectToProcessing().getPathToExcel());
@@ -33,9 +37,6 @@ public class ApplicationService extends AbstractService implements ApplicationFa
             processMissedBookRecords(book, resultBook);
             saveBookResult(resultBook);
             logger.info("Finish working on book " + book.getObjectToProcessing().getPathToExcel() + "\n");
-            //TODO vm: 1. Add calculation retail price from price_multiplier_percent
-            //TODO vm: 2. Add id from site into result book
-            //TODO vm: 3. Test that not available records change their availability to false
         }
         logger.info("run update end.");
     }
@@ -81,6 +82,7 @@ public class ApplicationService extends AbstractService implements ApplicationFa
     		PriceBookRecord record, 
     		PriceBookRecord newRecord, 
     		ObjectToProcessing oTo) {
+        newRecord.setSupplierId(record.getSupplierId());
         newRecord.setRowNumber(record.getRowNumber());
         newRecord.setArticul(record.getArticul());
         newRecord.setName(record.getName());
@@ -119,6 +121,9 @@ public class ApplicationService extends AbstractService implements ApplicationFa
 	public void setPriceCalculationService(PriceCalculationFacade priceCalculationService) {
 		this.priceCalculationService = priceCalculationService;
 	}
-    
-    
+
+    @Override
+    public void setSiteIdReaderFacade(SiteIdReaderFacade siteIdReaderFacade) {
+        this.siteIdReaderFacade = siteIdReaderFacade;
+    }
 }

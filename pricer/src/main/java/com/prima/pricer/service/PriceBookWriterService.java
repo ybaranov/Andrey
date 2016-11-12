@@ -1,6 +1,7 @@
 package com.prima.pricer.service;
 
 import com.prima.pricer.interfaces.PriceBookWriterFacade;
+import com.prima.pricer.interfaces.SiteIdReaderFacade;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +16,8 @@ import java.util.Iterator;
 
 public class PriceBookWriterService extends AbstractService implements PriceBookWriterFacade {
 
+    private SiteIdReaderFacade siteIdReaderFacade;
+
     protected void createHeader(Sheet sheet, CellStyle style) {
         Row row = sheet.createRow(0);
         row.createCell(0).setCellValue("АРТИКУЛ");
@@ -25,6 +28,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         row.createCell(5).setCellValue("ПРОЦЕНТ_РОЗНИЧНОЙ_ЦЕНЫ");
         row.createCell(6).setCellValue("ДОСТУПНО");
         row.createCell(7).setCellValue("НОВЫЙ");
+        row.createCell(8).setCellValue("ID_С_САЙТА");
         setRowStyle(style, row);
     }
 
@@ -36,7 +40,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             path = composePath(
                     resultBook.getObjectToProcessing().getPathToExcel());
 
-            logger.info("Write result. Path = " + path);
+            logger.info("Write result: Path = " + path);
 
             Workbook workbook = new XSSFWorkbook();
             CreationHelper createHelper = workbook.getCreationHelper();
@@ -94,19 +98,30 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         }
         boolean isAvailable = false;
         if (record.isAvailable()) {
-        	isAvailable = availabilityDeterminerSvc
-                .determineIsAvailable(record.getQuantity(),
-                        resultBook.getObjectToProcessing().getRoot().isAvailabilityOnExistence());
+            isAvailable = availabilityDeterminerSvc
+                    .determineIsAvailable(record.getQuantity(),
+                            resultBook.getObjectToProcessing().getRoot().isAvailabilityOnExistence());
         }
         row.createCell(6).setCellValue(isAvailable);
         row.createCell(7).setCellValue(record.isNew());
+
+        String siteId = null;
+        try {
+            siteId = siteIdReaderFacade.getProperties().get(record.getSupplierId()).get(record.getArticul());
+        } catch (Exception ignore) {
+        }
+        if (siteId != null) {
+            row.createCell(8).setCellValue(siteId);
+        } else {
+            row.createCell(8).setCellValue("");
+        }
 
         setRowStyle(style, row);
         return i;
     }
 
     protected void setRowStyle(CellStyle style, Row row) {
-        for (int j = 0; j < 8; j++) {
+        for (int j = 0; j < 9; j++) {
             try {
                 row.getCell(j).setCellStyle(style);
             } catch (Exception e) {
@@ -132,4 +147,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         }
     }
 
+    public void setSiteIdReaderFacade(SiteIdReaderFacade siteIdReaderFacade) {
+        this.siteIdReaderFacade = siteIdReaderFacade;
+    }
 }

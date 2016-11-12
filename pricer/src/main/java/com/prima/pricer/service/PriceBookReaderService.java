@@ -31,6 +31,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
             priceBook.setObjectToProcessing(objectToProcessing);
             priceBook.setRecords(readBook(objectToProcessing));
             result.add(priceBook);
+            logger.info("PriceBook " + objectToProcessing.getPathToExcel() + " was added to processing");
         }
         return result;
     }
@@ -97,10 +98,8 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
             return false;
 
         }
-        if (!objectToProcessing.getRoot().isHasRetailPrice() && !StringUtils.isNumeric(priceBookRecord.getPrice())
-                ) {
+        if (!objectToProcessing.getRoot().isHasRetailPrice() && !StringUtils.isNumeric(priceBookRecord.getPrice())) {
             return false;
-
         }
         return true;
     }
@@ -138,6 +137,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
         if (Files.exists(path)) {
             PriceBook result = new PriceBook();
             result.setRecords(new ArrayList<>());
+            String supplierId = objectToProcessing.getRoot().getSupplierId();
             try {
                 InputStream inputStream = new FileInputStream(path.toFile());
                 Workbook wb = WorkbookFactory.create(inputStream);
@@ -146,6 +146,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                     try {
                         PriceBookRecord record = new PriceBookRecord();
                         record.setRowNumber(row.getRowNum());
+                        record.setSupplierId(supplierId);
                         if (row.getCell(0) != null) {
                             row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                             record.setArticul(row.getCell(0).getStringCellValue());

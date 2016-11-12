@@ -15,6 +15,7 @@
 
     <bean id="priceBookWriterService" class="com.prima.pricer.service.PriceBookWriterService">
 	    <property name="availabilityDeterminerService" ref="availabilityDeterminerService" />
+	    <property name="siteIdReaderFacade" ref="siteIdReaderService" />
     </bean>
 
     <bean id="xmlConfigService" class="com.prima.pricer.service.XmlConfigService"/>
@@ -22,7 +23,9 @@
     <bean id="catalogService" class="com.prima.pricer.service.CatalogService"/>
     
     <bean id="priceCalculationService" class="com.prima.pricer.service.PriceCalculationService"/>
-    
+
+    <bean id="siteIdReaderService" class="com.prima.pricer.service.SiteIdReaderService"/>
+
     
     <bean id="applicationService" class="com.prima.pricer.service.ApplicationService">
         <property name="excelConvertService" ref="excelConvertService" />
@@ -30,6 +33,7 @@
         <property name="priceBookWriterService" ref="priceBookWriterService" />
         <property name="catalogService" ref="catalogService" />
         <property name="priceCalculationService" ref="priceCalculationService" />
+        <property name="siteIdReaderFacade" ref="siteIdReaderService" />
     </bean>
 
 </beans>

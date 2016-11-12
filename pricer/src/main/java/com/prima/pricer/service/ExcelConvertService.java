@@ -56,7 +56,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
                     .collect(Collectors.toList());
             for (Path file : paths) {
                 if (file.toString().toLowerCase().endsWith(".xls")) {
-                    logger.trace("Begin working on file " + file.toFile().getName());
+                    logger.info("Begin convert file " + file.toFile().getName());
                     Workbook workBookPOI;
 
                     FileInputStream inputStream;
@@ -72,7 +72,7 @@ public class ExcelConvertService extends AbstractService implements ExcelConvert
                     outputStream.close();
                     workBookPOI.close();
                     workXBookPOI.close();
-                    logger.trace("End working on file " + file.toFile().getName());
+                    logger.info("End convert file to " + file.toFile().getName() + "x successfully\n");
                 }
             }
         } catch (IOException e) {
