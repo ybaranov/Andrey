@@ -2,6 +2,6 @@
 .recommenders/
 .git/
 RemoteSystemsTempFiles
-pricer/.settings/
-pricer/.classpath
+andrey/
+./pricer/.settings/
 pricer/src/main/resources/application.properties
