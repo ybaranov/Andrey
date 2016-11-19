@@ -45,28 +45,28 @@ public class PriceBookReaderServiceTest extends AbstractTest {
 
     @Test
     public void test2() {
-        //arrange
-        beforeClass();
-        beforeTest();
-        ObjectToProcessing objectToProcessing = new ObjectToProcessing();
-        objectToProcessing.setPathToExcel("C:\\andrey\\files\\prices\\p0\\p0.xlsx");
-//        objectToProcessing.setPathToExcel("E:\\Dropbox\\Dropbox\\Java-Rep-New\\Andrey\\pricer\\src\\main\\resources\\files\\prices\\p0\\p0.xlsx");
-
-        //act
-        PriceBook result = priceBookReaderService.readExistedResultBook(objectToProcessing);
-
-        //Manual (temporary) verify
-        for (PriceBookRecord priceBookRecord : result.getRecords()) {
-            System.out.println("RowNumber = " + priceBookRecord.getRowNumber());
-            System.out.println("getSupplierId = " + priceBookRecord.getSupplierId());
-            System.out.println("Articul = " + priceBookRecord.getArticul());
-            System.out.println("Name = " + priceBookRecord.getName());
-            System.out.println("Price = " + priceBookRecord.getPrice());
-            System.out.println("Quantity = " + priceBookRecord.getQuantity());
-            if (priceBookRecord.hasRetailPrice()) {
-                System.out.println("" + priceBookRecord.getRetailPriceMultiplierPercent());
-            }
-            System.out.println("--------------------------------------------\n");
-        }
+//        //arrange
+//        beforeClass();
+//        beforeTest();
+//        ObjectToProcessing objectToProcessing = new ObjectToProcessing();
+//        objectToProcessing.setPathToExcel("C:\\andrey\\files\\prices\\p0\\p0.xlsx");
+////        objectToProcessing.setPathToExcel("E:\\Dropbox\\Dropbox\\Java-Rep-New\\Andrey\\pricer\\src\\main\\resources\\files\\prices\\p0\\p0.xlsx");
+//
+//        //act
+//        PriceBook result = priceBookReaderService.readExistedResultBook(objectToProcessing);
+//
+//        //Manual (temporary) verify
+//        for (PriceBookRecord priceBookRecord : result.getRecords()) {
+//            System.out.println("RowNumber = " + priceBookRecord.getRowNumber());
+//            System.out.println("getSupplierId = " + priceBookRecord.getSupplierId());
+//            System.out.println("Articul = " + priceBookRecord.getArticul());
+//            System.out.println("Name = " + priceBookRecord.getName());
+//            System.out.println("Price = " + priceBookRecord.getPrice());
+//            System.out.println("Quantity = " + priceBookRecord.getQuantity());
+//            if (priceBookRecord.hasRetailPrice()) {
+//                System.out.println("" + priceBookRecord.getRetailPriceMultiplierPercent());
+//            }
+//            System.out.println("--------------------------------------------\n");
+//        }
     }
 }
