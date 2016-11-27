@@ -72,6 +72,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                     }
                     //Retail price multiplier percent
                     if (objectToProcessing.getRoot().isHasRetailPrice()) {
+                        priceBookRecord.setRetailPrice(true);
                         priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());
                     }
                     if (!validateBookRecord(priceBookRecord, objectToProcessing)) {
