@@ -61,7 +61,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                     //Price
                     cell = row.getCell(objectToProcessing.getRoot().getProductPriceColumn().charAt(0) - 65);
                     cell.setCellType(Cell.CELL_TYPE_STRING);
-                    priceBookRecord.setPrice(cell.getStringCellValue());
+                    priceBookRecord.setPrice(cell.getStringCellValue().replaceAll(",", "."));
                     //Quantity
                     if (!objectToProcessing.getRoot().isAvailabilityOnExistence()) {
                         cell = row.getCell(objectToProcessing.getRoot().getProductQuantityColumn().charAt(0) - 65);

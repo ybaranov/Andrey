@@ -28,13 +28,18 @@ public class ApplicationService extends AbstractService implements ApplicationFa
             // read existed result book if it is existed, create new if not
             logger.info("Begin working on book " + book.getObjectToProcessing().getPathToExcel());
             PriceBook resultBook = priceBookReaderService.readExistedResultBook(book.getObjectToProcessing());
+            final boolean hasResultBookBefore;
             if (resultBook != null) {
                 priceBookWriterService.writeArchivedResultBook(book);
+                hasResultBookBefore = true;
             } else {
+            	hasResultBookBefore = false;
                 resultBook = new PriceBook();
             }
             processBook(book, resultBook);
-            processMissedBookRecords(book, resultBook);
+            if (hasResultBookBefore) {
+            	processMissedBookRecords(book, resultBook);
+            }
             saveBookResult(resultBook);
             logger.info("Finish working on book " + book.getObjectToProcessing().getPathToExcel() + "\n");
         }

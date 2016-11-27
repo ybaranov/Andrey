@@ -30,7 +30,7 @@ public class AvailabilityDeterminerService implements AvailabilityDeterminerFaca
 			return true;
 		}
 		try {
-			Integer iQnty = Integer.parseInt(quantity);
+			Double iQnty = Double.parseDouble(quantity);
 			return iQnty > 0;
 		} catch (NumberFormatException ex) {
 		}

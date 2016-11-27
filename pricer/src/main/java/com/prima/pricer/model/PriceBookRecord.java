@@ -7,7 +7,7 @@ public class PriceBookRecord {
     private String price;
     private String quantity;
     private boolean hasRetailPrice;
-    private boolean isAvailable;
+    private boolean isAvailable = true;
     // is newly created during last successful run of app. Update on scnd time of existance of this record to false.
     private boolean isNew;
     private Double retailPriceMultiplierPercent;
