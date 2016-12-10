@@ -107,8 +107,8 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             outputStream.close();
 
             return true;
-        } catch (Exception e) {
-            logger.error(e.getMessage());
+        } catch (Exception ex) {
+            logger.error("", ex);
             return false;
         }
     }

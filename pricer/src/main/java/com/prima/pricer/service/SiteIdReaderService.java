@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -74,7 +75,11 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
 
     @Override
     public Set<String> getExistingArticulsInPropsFile(String supplierId) {
-        return properties.get(supplierId).keySet();
+    	if (properties.containsKey(supplierId)) {
+    		return properties.get(supplierId).keySet();
+    	} else {
+    		return new HashSet<>();
+    	}
     }
 
     private Path readPath() {
