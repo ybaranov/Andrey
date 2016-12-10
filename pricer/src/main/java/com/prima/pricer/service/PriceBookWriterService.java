@@ -35,6 +35,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         row.createCell(8).setCellValue("ID_С_САЙТА");
         row.createCell(9).setCellValue("ДОСТУПНО_+");
         setRowStyle(style, row);
+        sheet.createFreezePane(10, 1);
     }
 
     @Override
