@@ -12,7 +12,10 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class PriceBookWriterService extends AbstractService implements PriceBookWriterFacade {
 
@@ -56,6 +59,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             Collection<PriceBookRecord> records = resultBook.getRecords();
             Iterator<PriceBookRecord> iterator = records.iterator();
             int i = 0;
+            Set<String> priceAvailableArticuls = new HashSet<>();
             while (iterator.hasNext()) {
                 PriceBookRecord record = iterator.next();
                 if (StringUtils.isEmpty(record.getArticul())
@@ -69,8 +73,13 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
                     i++;
                     continue;
                 }
+                // TODO yb : collect priceAvailableArticuls.
                 i = setRowValues(resultBook, createHelper, sheet, style, i, record);
             }
+            
+            // TODO yb : SiteIdReaderFacade.getExistingArticulsInPropsFile.
+            // subtract getExistingArticulsInPropsFile - priceAvailableArticuls.
+            // and write the difference with available = false.
 
             FileOutputStream outputStream = new FileOutputStream(path);
             workbook.write(outputStream);
@@ -108,9 +117,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 
         String siteId = null;
         try {
-            siteId = siteIdReaderFacade.getProperties()
-                    .get(record.getSupplierId())
-                    .get(record.getArticul()).keySet().iterator().next();
+            siteId = null; // TODO yb : determine id.
         } catch (Exception ignore) {
         }
         if (siteId != null) {
