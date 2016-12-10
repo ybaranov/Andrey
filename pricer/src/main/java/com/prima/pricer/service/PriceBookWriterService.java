@@ -29,6 +29,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         row.createCell(6).setCellValue("ДОСТУПНО");
         row.createCell(7).setCellValue("НОВЫЙ");
         row.createCell(8).setCellValue("ID_С_САЙТА");
+        row.createCell(9).setCellValue("ДОСТУПНО_+");
         setRowStyle(style, row);
     }
 
@@ -114,6 +115,11 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             row.createCell(8).setCellValue(siteId);
         } else {
             row.createCell(8).setCellValue("");
+        }
+        if (isAvailable) {
+        	row.createCell(9).setCellValue("+");
+        } else {
+            row.createCell(9).setCellValue("-");
         }
 
         setRowStyle(style, row);

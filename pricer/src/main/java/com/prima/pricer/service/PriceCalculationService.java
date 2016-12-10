@@ -21,7 +21,7 @@ public class PriceCalculationService extends AbstractService implements PriceCal
 		try {
 			BigDecimal bDbasePrice = new BigDecimal(basePrice);
 			BigDecimal multiplier = new BigDecimal(oto.getRoot().getRetailPriceMultiplierPercent());
-			return bDbasePrice.multiply(multiplier).toString();
+			return Integer.toString(bDbasePrice.multiply(multiplier).intValue());
 		} catch (NumberFormatException ex) {
 			logger.error("Can't cast basePrice {" + basePrice + "} to BigDecimal.", ex);
 			return null;
