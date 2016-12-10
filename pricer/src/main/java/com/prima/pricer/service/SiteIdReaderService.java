@@ -1,6 +1,8 @@
 package com.prima.pricer.service;
 
 import com.prima.pricer.interfaces.SiteIdReaderFacade;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.FileInputStream;
@@ -12,10 +14,12 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 public class SiteIdReaderService extends AbstractService implements SiteIdReaderFacade {
 
-    private Map<String, Map<String, Map<String, String>>> properties = new HashMap<>();
+    //Map<suplierId, Map<articul, Pair<siteId, siteName>>>
+    private Map<String, Map<String, Pair<String, String>>> properties = new HashMap<>();
 
     @Override
     public void readAllProperties() {
@@ -41,13 +45,12 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
                         String articul = supplierAndArticul.substring(delimiterIndex + 1);
                         String id = row.getCell(1).getStringCellValue();
                         String name = row.getCell(2).getStringCellValue();
-                        Map<String, Map<String, String>> temp = properties.get(supplier);
+                        Map<String, Pair<String, String>> temp = properties.get(supplier);
                         if (temp == null) {
                             temp = new HashMap<>();
                         }
-                        Map<String, String> articulAndName = new HashMap<>();
-                        articulAndName.put(id, name);
-                        temp.put(articul, articulAndName);
+                        Pair<String, String> idAndName = new ImmutablePair<>(id, name);
+                        temp.put(articul, idAndName);
                         properties.put(supplier, temp);
                     }
                 }
@@ -57,6 +60,21 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
                 logger.warn("Can't read props.xlsx");
             }
         }
+    }
+
+    @Override
+    public Pair<String, String> getSiteIdSiteName(String supplierId, String articul) {
+        Pair<String, String> pair = null;
+        try {
+            pair = properties.get(supplierId).get(articul);
+        } catch (NullPointerException e) {
+        }
+        return pair;
+    }
+
+    @Override
+    public Set<String> getExistingArticulsInPropsFile(String supplierId) {
+        return properties.get(supplierId).keySet();
     }
 
     private Path readPath() {
@@ -80,10 +98,5 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
             }
         }
         return path;
-    }
-
-    @Override
-    public Map<String, Map<String, Map<String, String>>> getProperties() {
-        return properties;
     }
 }

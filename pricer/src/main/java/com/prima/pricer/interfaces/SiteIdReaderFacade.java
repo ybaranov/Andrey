@@ -1,15 +1,14 @@
 package com.prima.pricer.interfaces;
 
-import java.util.Map;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.util.Set;
 
 public interface SiteIdReaderFacade {
 
     void readAllProperties();
-
-    //Map<String, Map<String, Map<String, String>>> getProperties();
     
-    String getSiteId(String supplierId, String articul);
+    Pair<String, String> getSiteIdSiteName(String supplierId, String articul);
     
     Set<String> getExistingArticulsInPropsFile(String supplierId);
 }

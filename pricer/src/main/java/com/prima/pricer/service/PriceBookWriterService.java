@@ -5,6 +5,7 @@ import com.prima.pricer.interfaces.SiteIdReaderFacade;
 import com.prima.pricer.model.PriceBook;
 import com.prima.pricer.model.PriceBookRecord;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -73,13 +74,33 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
                     i++;
                     continue;
                 }
-                // TODO yb : collect priceAvailableArticuls.
+                priceAvailableArticuls.add(record.getArticul());
                 i = setRowValues(resultBook, createHelper, sheet, style, i, record);
             }
             
             // TODO yb : SiteIdReaderFacade.getExistingArticulsInPropsFile.
             // subtract getExistingArticulsInPropsFile - priceAvailableArticuls.
             // and write the difference with available = false.
+
+            Set<String> existingArticulsInPropsFile = siteIdReaderFacade.getExistingArticulsInPropsFile(resultBook.getObjectToProcessing().getRoot().getSupplierId());
+            logger.debug("existingArticulsInPropsFile size = " + existingArticulsInPropsFile.size());
+            existingArticulsInPropsFile.removeAll(priceAvailableArticuls);
+            logger.debug("Diff size = " + existingArticulsInPropsFile.size());
+
+            for (String articul : existingArticulsInPropsFile) {
+                PriceBookRecord record = new PriceBookRecord();
+                record.setSupplierId(resultBook.getObjectToProcessing().getRoot().getSupplierId());
+                record.setArticul(articul);
+                record.setName(siteIdReaderFacade.getSiteIdSiteName(record.getSupplierId(), articul).getRight());
+                record.setPrice("0");
+                record.setQuantity("0");
+                record.setRetailPrice(false);
+                record.setRetailPriceMultiplierPercent(0D);
+                record.setAvailable(false);
+                record.setNew(false);
+                record.setRowNumber(0);
+                i = setRowValues(resultBook, createHelper, sheet, style, i, record);
+            }
 
             FileOutputStream outputStream = new FileOutputStream(path);
             workbook.write(outputStream);
@@ -116,28 +137,17 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         row.createCell(7).setCellValue(record.isNew());
 
         String siteId = null;
-        try {
-            siteId = null; // TODO yb : determine id.
-        } catch (Exception ignore) {
+        String siteName = null;
+
+        Pair<String, String> siteIdSiteName = siteIdReaderFacade.getSiteIdSiteName(record.getSupplierId(), record.getArticul());
+        if (siteIdSiteName != null) {
+            siteId = siteIdSiteName.getLeft();
+            siteName = siteIdSiteName.getRight();
         }
         if (siteId != null) {
             row.createCell(8).setCellValue(siteId);
         } else {
             row.createCell(8).setCellValue("");
-        }
-        if (isAvailable) {
-        	row.createCell(9).setCellValue("+");
-        } else {
-            row.createCell(9).setCellValue("-");
-        }
-
-        String siteName = null;
-        try {
-            siteName = siteIdReaderFacade.getProperties()
-                    .get(record.getSupplierId())
-                    .get(record.getArticul())
-                    .get(siteId);
-        } catch (Exception ignore) {
         }
         if (siteName != null) {
             row.createCell(1).setCellValue(siteName);
@@ -145,12 +155,18 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
             row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));
         }
 
+        if (isAvailable) {
+        	row.createCell(9).setCellValue("+");
+        } else {
+            row.createCell(9).setCellValue("-");
+        }
+
         setRowStyle(style, row);
         return i;
     }
 
     protected void setRowStyle(CellStyle style, Row row) {
-        for (int j = 0; j < 9; j++) {
+        for (int j = 0; j < 10; j++) {
             try {
                 row.getCell(j).setCellStyle(style);
             } catch (Exception e) {
