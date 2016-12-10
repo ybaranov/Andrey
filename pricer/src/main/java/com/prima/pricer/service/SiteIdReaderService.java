@@ -65,12 +65,11 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
 
     @Override
     public Pair<String, String> getSiteIdSiteName(String supplierId, String articul) {
-        Pair<String, String> pair = null;
-        try {
-            pair = properties.get(supplierId).get(articul);
-        } catch (NullPointerException e) {
+        if (properties.containsKey(supplierId)) {
+            return properties.get(supplierId).get(articul);
+        } else {
+            return new ImmutablePair<>("", "");
         }
-        return pair;
     }
 
     @Override

@@ -77,15 +77,11 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
                 priceAvailableArticuls.add(record.getArticul());
                 i = setRowValues(resultBook, createHelper, sheet, style, i, record);
             }
-            
-            // TODO yb : SiteIdReaderFacade.getExistingArticulsInPropsFile.
-            // subtract getExistingArticulsInPropsFile - priceAvailableArticuls.
-            // and write the difference with available = false.
 
             Set<String> existingArticulsInPropsFile = siteIdReaderFacade.getExistingArticulsInPropsFile(resultBook.getObjectToProcessing().getRoot().getSupplierId());
-            logger.debug("existingArticulsInPropsFile size = " + existingArticulsInPropsFile.size());
+            logger.debug("Total count id's from site = " + existingArticulsInPropsFile.size());
             existingArticulsInPropsFile.removeAll(priceAvailableArticuls);
-            logger.debug("Diff size = " + existingArticulsInPropsFile.size());
+            logger.debug("Count id's from site, that hasn't analogs in p*.xlsx file = " + existingArticulsInPropsFile.size());
 
             for (String articul : existingArticulsInPropsFile) {
                 PriceBookRecord record = new PriceBookRecord();
@@ -115,7 +111,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 
     protected int setRowValues(PriceBook resultBook, CreationHelper createHelper, Sheet sheet, CellStyle style, int i, PriceBookRecord record) {
         Row row = sheet.createRow(i++);
-//        logger.info("Save record: " + record);
+        logger.debug("Save record: " + record);
 
         row.createCell(0).setCellValue(createHelper.createRichTextString(record.getArticul()));
 
@@ -149,7 +145,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         } else {
             row.createCell(8).setCellValue("");
         }
-        if (siteName != null) {
+        if (siteName != null && !siteName.equals("")) {
             row.createCell(1).setCellValue(siteName);
         } else {
             row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));

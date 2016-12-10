@@ -44,9 +44,9 @@ public class AppTest extends AbstractTest {
         logger.info(root.getProductPriceColumn());
         logger.info(root.getProductQuantityColumn());
         logger.info(root.getSupplierId());
-        logger.info(root.getRetailPriceMultiplierPercent());
-        logger.info(root.isHasRetailPrice());
-        logger.info(root.isAvailabilityOnExistence());
+        logger.info("" + root.getRetailPriceMultiplierPercent());
+        logger.info("" + root.isHasRetailPrice());
+        logger.info("" + root.isAvailabilityOnExistence());
     }
 
     @Test

@@ -1,14 +1,15 @@
 package com.prima.pricer.service;
 
 import com.prima.pricer.interfaces.AvailabilityDeterminerFacade;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 public abstract class AbstractService {
-    protected final static Logger logger = LogManager.getRootLogger();
+    protected final static Logger logger = getLogger(AbstractService.class);
 
     protected AvailabilityDeterminerFacade availabilityDeterminerSvc;
 

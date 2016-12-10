@@ -32,7 +32,7 @@ public class CatalogServiceTest extends AbstractTest {
             Assert.assertNotNull(objectToProcessing.getPathToExcel());
             logger.info(objectToProcessing.getPathToExcel());
             Assert.assertNotNull(objectToProcessing.getRoot());
-            logger.info(objectToProcessing.getRoot());
+            logger.info("" + objectToProcessing.getRoot());
             Root root = objectToProcessing.getRoot();
             assertNotNull(root);
             assertNotNull(root.getArticulColumn());
