@@ -92,7 +92,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         row.createCell(2).setCellValue(createHelper.createRichTextString(record.getPrice()));
         row.createCell(3).setCellValue(createHelper.createRichTextString(record.getQuantity()));
         row.createCell(4).setCellValue(record.hasRetailPrice());
-        if (record.hasRetailPrice()) {
+        if (record.getRetailPriceMultiplierPercent() != null) {
             row.createCell(5).setCellValue(record.getRetailPriceMultiplierPercent());
         } else {
             row.createCell(5);

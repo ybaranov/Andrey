@@ -81,6 +81,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                         priceBookRecord.setRetailPrice(true);
                         priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());
                     }
+                    priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());
                     if (!validateBookRecord(priceBookRecord, objectToProcessing)) {
                     	kwantiti++;
                     	continue;
@@ -89,7 +90,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                 } catch (Exception e) {
                 }
             }
-            logger.info("kwantiti:" + kwantitiArt + " ; " + kwantitiPrice + " ; " + kwantitiQnty + " ; " + kwantitiNum);
+            logger.debug("kwantiti:" + kwantitiArt + " ; " + kwantitiPrice + " ; " + kwantitiQnty + " ; " + kwantitiNum);
         } catch (IOException e) {
             logger.error(e.getMessage());
         } catch (InvalidFormatException e) {

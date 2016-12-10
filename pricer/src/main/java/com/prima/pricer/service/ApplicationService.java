@@ -81,6 +81,7 @@ public class ApplicationService extends AbstractService implements ApplicationFa
             PriceBookRecord existedRecord, ObjectToProcessing oTo) {
         existedRecord.setQuantity(record.getQuantity());
         existedRecord.setPrice(priceCalculationService.calculatePrice(record.getPrice(), oTo));
+        existedRecord.setRetailPriceMultiplierPercent(oTo.getRoot().getRetailPriceMultiplierPercent());
     }
 
     protected void processNewBookingRecord(
@@ -94,11 +95,11 @@ public class ApplicationService extends AbstractService implements ApplicationFa
         newRecord.setPrice(priceCalculationService.calculatePrice(record.getPrice(), oTo));
         newRecord.setQuantity(record.getQuantity());
         newRecord.setRetailPrice(record.hasRetailPrice());
-        if (record.hasRetailPrice()) {
-            newRecord.setRetailPriceMultiplierPercent(record.getRetailPriceMultiplierPercent());
-        } else {
-            newRecord.setRetailPriceMultiplierPercent(0d);
-        }
+        //if (record.hasRetailPrice()) {
+            newRecord.setRetailPriceMultiplierPercent(oTo.getRoot().getRetailPriceMultiplierPercent());
+//        } else {
+//            newRecord.setRetailPriceMultiplierPercent(record.getRetailPriceMultiplierPercent());
+//        }
         newRecord.setAvailable(record.isAvailable());
     }
 
