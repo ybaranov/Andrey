@@ -1,0 +1,10 @@
+<root>
+	<supplier_id>p2</supplier_id>
+	<articul_column>D</articul_column>
+	<product_name_column>E</product_name_column>
+	<product_price_column>G</product_price_column>
+	<product_quantity_column></product_quantity_column>
+	<has_retail_price>true</has_retail_price>
+	<retail_price_multiplier_percent>1</retail_price_multiplier_percent>
+	<availability_on_existence>true</availability_on_existence>
+</root>
