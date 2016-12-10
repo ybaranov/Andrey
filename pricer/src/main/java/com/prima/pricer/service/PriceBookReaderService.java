@@ -13,6 +13,7 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,6 +22,10 @@ import java.util.*;
 public class PriceBookReaderService extends AbstractService implements PriceBookReaderFacade {
 
     protected CatalogFacade catalogFacade;
+    protected int kwantitiNum;
+    protected int kwantitiArt;
+    protected int kwantitiPrice;
+    protected int kwantitiQnty;
 
     @Override
     public Collection<PriceBook> getAllBooks() {
@@ -43,6 +48,7 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
 
             Workbook workbook = WorkbookFactory.create(inp);
             Sheet sheet = workbook.getSheetAt(0);
+            int kwantiti = 0;
             for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
                 PriceBookRecord priceBookRecord = new PriceBookRecord();
                 priceBookRecord.setRowNumber(i);
@@ -76,12 +82,14 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
                         priceBookRecord.setRetailPriceMultiplierPercent(objectToProcessing.getRoot().getRetailPriceMultiplierPercent());
                     }
                     if (!validateBookRecord(priceBookRecord, objectToProcessing)) {
+                    	kwantiti++;
                     	continue;
                     }
                     result.add(priceBookRecord);
                 } catch (Exception e) {
                 }
             }
+            logger.info("kwantiti:" + kwantitiArt + " ; " + kwantitiPrice + " ; " + kwantitiQnty + " ; " + kwantitiNum);
         } catch (IOException e) {
             logger.error(e.getMessage());
         } catch (InvalidFormatException e) {
@@ -93,16 +101,35 @@ public class PriceBookReaderService extends AbstractService implements PriceBook
     
     protected boolean validateBookRecord(
     		PriceBookRecord priceBookRecord, ObjectToProcessing objectToProcessing) {
-    	if (StringUtils.isEmpty(priceBookRecord.getArticul())
-                || StringUtils.isEmpty(priceBookRecord.getPrice())
-                || StringUtils.isEmpty(priceBookRecord.getQuantity())) {
+    	if (StringUtils.isEmpty(priceBookRecord.getArticul())) {
+    		kwantitiArt++;
             return false;
 
         }
-        if (!objectToProcessing.getRoot().isHasRetailPrice() && !StringUtils.isNumeric(priceBookRecord.getPrice())) {
+    	if (StringUtils.isEmpty(priceBookRecord.getPrice())) {
+    		kwantitiPrice++;
+            return false;
+
+        }
+    	if (StringUtils.isEmpty(priceBookRecord.getQuantity())) {
+    		kwantitiQnty++;
+            return false;
+
+        }
+        if (!objectToProcessing.getRoot().isHasRetailPrice() && !isNumeric(priceBookRecord.getPrice())) {
+        	kwantitiNum++;
             return false;
         }
         return true;
+    }
+    
+    protected boolean isNumeric(String price) {
+    	try {
+    		new BigDecimal(price);
+    		return true;
+    	} catch (Exception exc) {
+    		return false;
+    	}
     }
 
     public void setCatalogService(CatalogFacade catalogFacade) {
