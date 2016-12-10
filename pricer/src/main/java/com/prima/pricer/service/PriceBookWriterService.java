@@ -88,7 +88,7 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 //        logger.info("Save record: " + record);
 
         row.createCell(0).setCellValue(createHelper.createRichTextString(record.getArticul()));
-        row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));
+
         row.createCell(2).setCellValue(createHelper.createRichTextString(record.getPrice()));
         row.createCell(3).setCellValue(createHelper.createRichTextString(record.getQuantity()));
         row.createCell(4).setCellValue(record.hasRetailPrice());
@@ -108,7 +108,9 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
 
         String siteId = null;
         try {
-            siteId = siteIdReaderFacade.getProperties().get(record.getSupplierId()).get(record.getArticul());
+            siteId = siteIdReaderFacade.getProperties()
+                    .get(record.getSupplierId())
+                    .get(record.getArticul()).keySet().iterator().next();
         } catch (Exception ignore) {
         }
         if (siteId != null) {
@@ -120,6 +122,20 @@ public class PriceBookWriterService extends AbstractService implements PriceBook
         	row.createCell(9).setCellValue("+");
         } else {
             row.createCell(9).setCellValue("-");
+        }
+
+        String siteName = null;
+        try {
+            siteName = siteIdReaderFacade.getProperties()
+                    .get(record.getSupplierId())
+                    .get(record.getArticul())
+                    .get(siteId);
+        } catch (Exception ignore) {
+        }
+        if (siteName != null) {
+            row.createCell(1).setCellValue(siteName);
+        } else {
+            row.createCell(1).setCellValue(createHelper.createRichTextString(record.getName()));
         }
 
         setRowStyle(style, row);

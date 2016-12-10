@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class SiteIdReaderService extends AbstractService implements SiteIdReaderFacade {
 
-    private Map<String, Map<String, String>> properties = new HashMap<>();
+    private Map<String, Map<String, Map<String, String>>> properties = new HashMap<>();
 
     @Override
     public void readAllProperties() {
@@ -26,9 +26,12 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
                 Workbook wb = WorkbookFactory.create(inputStream);
                 Sheet sheet = wb.getSheetAt(0);
                 for (Row row : sheet) {
-                    if (row.getCell(0) != null && row.getCell(1) != null) {
+                    if (row.getCell(0) != null
+                            && row.getCell(1) != null
+                            && row.getCell(2) != null) {
                         row.getCell(0).setCellType(Cell.CELL_TYPE_STRING);
                         row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
+                        row.getCell(2).setCellType(Cell.CELL_TYPE_STRING);
                         String supplierAndArticul = row.getCell(0).getStringCellValue();
                         int delimiterIndex = supplierAndArticul.indexOf("_");
                         if (delimiterIndex == -1) {
@@ -37,11 +40,14 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
                         String supplier = supplierAndArticul.substring(0, delimiterIndex);
                         String articul = supplierAndArticul.substring(delimiterIndex + 1);
                         String id = row.getCell(1).getStringCellValue();
-                        Map<String, String> temp = properties.get(supplier);
+                        String name = row.getCell(2).getStringCellValue();
+                        Map<String, Map<String, String>> temp = properties.get(supplier);
                         if (temp == null) {
                             temp = new HashMap<>();
                         }
-                        temp.put(articul, id);
+                        Map<String, String> articulAndName = new HashMap<>();
+                        articulAndName.put(id, name);
+                        temp.put(articul, articulAndName);
                         properties.put(supplier, temp);
                     }
                 }
@@ -77,7 +83,7 @@ public class SiteIdReaderService extends AbstractService implements SiteIdReader
     }
 
     @Override
-    public Map<String, Map<String, String>> getProperties() {
+    public Map<String, Map<String, Map<String, String>>> getProperties() {
         return properties;
     }
 }

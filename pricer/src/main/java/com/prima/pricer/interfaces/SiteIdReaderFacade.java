@@ -6,5 +6,5 @@ public interface SiteIdReaderFacade {
 
     void readAllProperties();
 
-    Map<String, Map<String, String>> getProperties();
+    Map<String, Map<String, Map<String, String>>> getProperties();
 }
